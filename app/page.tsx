@@ -47,13 +47,9 @@ export default function LoginPage() {
           ログイン
         </button>
 
-        <p className="text-xs text-gray-400 mt-4 text-center">
-          テスト用: taro@example.com / password123
-        </p>
-
         <button
           onClick={() => router.push("/forgot-password")}
-          className="w-full text-blue-400 text-sm mt-2 hover:text-blue-600"
+          className="w-full text-blue-400 text-sm mt-4 hover:text-blue-600"
         >
           パスワードを忘れた方はこちら
         </button>
