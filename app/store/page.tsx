@@ -43,11 +43,11 @@ export default function StoreDashboard() {
         </Link>
         <Link href="/store/customers"
           className="flex items-center justify-between bg-white px-4 py-4 rounded-xl text-gray-800 text-base shadow">
-          <span>顧客一覧</span><span>→</span>
+          <span>お客様一覧</span><span>→</span>
         </Link>
         <Link href="/store/customers/new"
           className="flex items-center justify-between bg-white px-4 py-4 rounded-xl text-gray-800 text-base shadow">
-          <span>顧客登録</span><span>→</span>
+          <span>お客様登録</span><span>→</span>
         </Link>
         {/* QR登録（お客様が自分で登録できる方法） */}
         <Link href="/store/qr"

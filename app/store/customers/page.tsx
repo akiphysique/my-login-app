@@ -25,14 +25,14 @@ export default function CustomerList() {
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow-sm px-4 py-3 flex items-center gap-3">
         <Link href="/store" className="text-blue-500 text-base">← 戻る</Link>
-        <h1 className="font-bold text-gray-800 text-base">顧客一覧</h1>
+        <h1 className="font-bold text-gray-800 text-base">お客様一覧</h1>
       </header>
       <HomeButton href="/store" />
       <div className="p-4 pb-24">
         {loading ? (
           <p className="text-gray-500 text-base">読み込み中...</p>
         ) : customers.length === 0 ? (
-          <p className="text-gray-500 text-base">顧客が登録されていません</p>
+          <p className="text-gray-500 text-base">お客様が登録されていません</p>
         ) : (
           <div className="space-y-3">
             {customers.map((c) => (
@@ -60,7 +60,7 @@ export default function CustomerList() {
         )}
         <Link href="/store/customers/new"
           className="block mt-4 text-center bg-blue-500 text-white py-3 rounded-xl font-bold text-base">
-          新規顧客登録
+          新規お客様登録
         </Link>
       </div>
     </div>

@@ -58,7 +58,7 @@ export default function NewCustomer() {
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow-sm px-4 py-3 flex items-center gap-3">
         <Link href="/store/customers" className="text-blue-500 text-base">← 戻る</Link>
-        <h1 className="font-bold text-gray-800 text-base">顧客登録</h1>
+        <h1 className="font-bold text-gray-800 text-base">お客様登録</h1>
       </header>
       <HomeButton href="/store" />
       <div className="p-4 pb-24 space-y-4">
