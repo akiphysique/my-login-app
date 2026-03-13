@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/app/generated/prisma
+
+# データベースファイル（ローカルのみ。本番では別途管理）
+*.db
+*.db-journal
+
+# Claude Codeのローカル設定（個人環境の設定のため除外）
+.claude/settings.local.json

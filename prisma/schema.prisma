@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Store {
+  id           String     @id @default(cuid())
+  name         String
+  address      String
+  email        String     @unique
+  passwordHash String
+  storeToken   String?    @unique  // QR自己登録用トークン（店舗ごとに一意）
+  createdAt    DateTime   @default(now())
+  customers    Customer[]
+  pointLogs    PointLog[]
+}
+
+model Customer {
+  id           String     @id @default(cuid())
+  storeId      String
+  store        Store      @relation(fields: [storeId], references: [id])
+  name         String
+  email        String
+  phone        String
+  points       Int        @default(0)
+  memo         String?
+  registeredBy String     @default("store")  // "store"＝店舗登録 / "self"＝QR自己登録
+  passwordHash String
+  createdAt    DateTime   @default(now())
+  pointLogs    PointLog[]
+}
+
+model PointLog {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id])
+  storeId    String
+  store      Store    @relation(fields: [storeId], references: [id])
+  amount     Int
+  staffName  String
+  memo       String?
+  createdAt  DateTime @default(now())
+}
