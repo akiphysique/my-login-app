@@ -215,3 +215,73 @@ body {
 
 /* ログアウトボタンホバー（text-[#555555]） */
 [data-theme="dark"] .hover\:text-\[\#555555\]:hover { color: #e0e0e0 !important; }
+
+/* ============================================================
+   パンくずリスト（現在地表示バー）
+   ログイン画面・ホーム画面以外の全ページ上部に表示
+   ============================================================ */
+.breadcrumb-nav {
+  /* 右側にテーマ切り替えボタン（44px）が被らないようにスペースを確保 */
+  padding: 10px 60px 10px 16px;
+  font-size: 13px; /* 12pt以上を確保 */
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  /* ライトモード：薄グレー背景 */
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+  /* ページ幅いっぱいに広げる */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ダークモード時のパンくずバー背景 */
+[data-theme="dark"] .breadcrumb-nav {
+  background-color: #1a1a1a;
+  border-bottom-color: #333333;
+}
+
+/* 各アイテムのラッパー（インライン配置） */
+.breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* 区切り文字「>」 */
+.breadcrumb-sep {
+  margin: 0 6px;
+  color: #888888;
+  font-size: 13px;
+}
+
+[data-theme="dark"] .breadcrumb-sep {
+  color: #666666;
+}
+
+/* リンクあり項目（クリックで遷移できる） */
+.breadcrumb-link {
+  color: #2196F3;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.breadcrumb-link:hover {
+  text-decoration: underline;
+}
+
+[data-theme="dark"] .breadcrumb-link {
+  color: #64b5f6;
+}
+
+/* 現在ページ（最後の項目・太字・リンクなし） */
+.breadcrumb-current {
+  font-weight: bold;
+  font-size: 13px;
+  /* ライトモード：濃いグレーで視認性確保 */
+  color: #333333;
+}
+
+[data-theme="dark"] .breadcrumb-current {
+  color: #e0e0e0;
+}

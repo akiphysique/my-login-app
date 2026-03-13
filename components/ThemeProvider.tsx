@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Breadcrumb from "./Breadcrumb";
 
 // localStorageに保存するキー名
 const STORAGE_KEY = "matakite-theme";
@@ -35,6 +36,8 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
       >
         {theme === "dark" ? "🌙" : "☀️"}
       </button>
+      {/* パンくずリスト（ログイン・ホーム画面以外に表示） */}
+      <Breadcrumb />
       {children}
     </>
   );
