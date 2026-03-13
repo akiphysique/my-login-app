@@ -32,7 +32,7 @@ export default function StoreLoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-sm">
         <h1 className="font-bold text-center mb-1" style={{ fontSize: "2.5rem", color: "#2196F3" }}>マタキテ</h1>
-        <p className="text-center font-bold mb-6" style={{ fontSize: "1.25rem", color: "#333333" }}>店舗様ログイン</p>
+        <p className="text-center font-bold mb-6 login-subtitle" style={{ fontSize: "1.25rem" }}>店舗様ログイン</p>
 
         <input
           type="email"
