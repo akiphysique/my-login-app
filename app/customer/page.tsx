@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import LogoutDialog from "@/components/LogoutDialog";
 
 // お客様情報の型
 interface CustomerData {
@@ -31,6 +32,8 @@ export default function CustomerMyPage() {
   const [logs, setLogs] = useState<PointLog[]>([]);
   const [session, setSession] = useState<SessionData | null>(null);
   const [loading, setLoading] = useState(true);
+  // ログアウト確認ダイアログの表示状態
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -68,6 +71,13 @@ export default function CustomerMyPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* ログアウト確認ダイアログ */}
+      {showLogoutDialog && (
+        <LogoutDialog
+          onConfirm={handleLogout}
+          onCancel={() => setShowLogoutDialog(false)}
+        />
+      )}
       {/* ヘッダー：店舗名と住所を目立つ位置に表示（仕様要件） */}
       <header className="bg-white shadow-sm px-4 py-4 border-b">
         <p className="font-bold text-gray-800 text-xl">{session?.storeName}</p>
@@ -119,7 +129,7 @@ export default function CustomerMyPage() {
 
       {/* ログアウトボタン */}
       <div className="px-4 mt-2 pb-8">
-        <button onClick={handleLogout} className="logout-btn">
+        <button onClick={() => setShowLogoutDialog(true)} className="logout-btn">
           ログアウト
         </button>
       </div>

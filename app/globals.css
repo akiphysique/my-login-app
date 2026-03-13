@@ -249,6 +249,108 @@ body {
 }
 
 /* ============================================================
+   ログアウト確認ダイアログ
+   画面中央にオーバーレイ表示。ダーク・ライト両対応
+   ============================================================ */
+
+/* 画面全体を覆う半透明の背景 */
+.logout-dialog-overlay {
+  position: fixed;
+  inset: 0;                          /* 上下左右すべて0でフル画面をカバー */
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;                    /* すべての要素より前面に表示 */
+  padding: 16px;
+}
+
+/* ダイアログの白いボックス */
+.logout-dialog-box {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 28px 20px 20px;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+[data-theme="dark"] .logout-dialog-box {
+  background-color: #1e1e1e;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+}
+
+/* 確認メッセージ */
+.logout-dialog-message {
+  font-size: 15px;           /* 12pt以上 */
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+[data-theme="dark"] .logout-dialog-message {
+  color: #e0e0e0;
+}
+
+/* ボタンを横並びにするコンテナ */
+.logout-dialog-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* 共通ボタンスタイル */
+.logout-dialog-btn-cancel,
+.logout-dialog-btn-confirm {
+  flex: 1;
+  min-height: 56px;          /* スマホで押しやすい十分な高さ */
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  cursor: pointer;
+  line-height: 1.4;
+  padding: 10px 8px;
+}
+
+/* 左ボタン：いいえ（グレー） */
+.logout-dialog-btn-cancel {
+  background-color: #555555;
+}
+
+.logout-dialog-btn-cancel:hover {
+  background-color: #444444;
+}
+
+[data-theme="dark"] .logout-dialog-btn-cancel {
+  background-color: #555555 !important;
+  color: #ffffff !important;
+}
+
+/* 右ボタン：はい（赤） */
+.logout-dialog-btn-confirm {
+  background-color: #e53935;
+}
+
+.logout-dialog-btn-confirm:hover {
+  background-color: #c62828;
+}
+
+[data-theme="dark"] .logout-dialog-btn-confirm {
+  background-color: #e53935 !important;
+  color: #ffffff !important;
+}
+
+/* ボタン内の補足テキスト（小さめフォント） */
+.logout-dialog-btn-sub {
+  font-size: 11px;
+  font-weight: normal;
+  opacity: 0.9;
+}
+
+/* ============================================================
    パンくずリスト（現在地表示バー）
    ログイン画面・ホーム画面以外の全ページ上部に表示
    ============================================================ */
