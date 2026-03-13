@@ -64,8 +64,8 @@ export default function StoreDashboard() {
         </Link>
       </nav>
 
-      <div className="px-4 mt-2">
-        <button onClick={handleLogout} className="w-full text-[#333333] text-base py-2 hover:text-[#555555]">
+      <div className="px-4 mt-2 pb-6">
+        <button onClick={handleLogout} className="logout-btn">
           ログアウト
         </button>
       </div>

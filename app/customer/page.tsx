@@ -119,10 +119,7 @@ export default function CustomerMyPage() {
 
       {/* ログアウトボタン */}
       <div className="px-4 mt-2 pb-8">
-        <button
-          onClick={handleLogout}
-          className="w-full text-[#333333] text-base py-3 hover:text-[#555555]"
-        >
+        <button onClick={handleLogout} className="logout-btn">
           ログアウト
         </button>
       </div>

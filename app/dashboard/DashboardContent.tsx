@@ -15,10 +15,7 @@ export default function DashboardContent() {
         <p className="text-gray-500 text-sm mb-2">ログイン成功！ようこそ</p>
         <h1 className="text-3xl font-bold mb-6 text-gray-900">{name} さん</h1>
 
-        <button
-          onClick={() => router.push("/")}
-          className="w-full border border-gray-300 text-gray-600 py-2 rounded-lg hover:bg-gray-50"
-        >
+        <button onClick={() => router.push("/")} className="logout-btn">
           ログアウト
         </button>
       </div>
