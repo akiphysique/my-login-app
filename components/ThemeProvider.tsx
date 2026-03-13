@@ -33,7 +33,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
         aria-label={theme === "dark" ? "ライトモードに切り替え" : "ダークモードに切り替え"}
         className="theme-toggle-btn"
       >
-        {theme === "dark" ? "☀️" : "🌙"}
+        {theme === "dark" ? "🌙" : "☀️"}
       </button>
       {children}
     </>
