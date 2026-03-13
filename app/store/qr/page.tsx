@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import HomeButton from "@/components/HomeButton";
 
 export default function QRPage() {
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
@@ -54,7 +55,8 @@ export default function QRPage() {
         <Link href="/store" className="text-blue-500 text-base">← 戻る</Link>
         <h1 className="font-bold text-gray-800 text-base">QR登録</h1>
       </header>
-      <div className="p-4 space-y-4">
+      <HomeButton href="/store" />
+      <div className="p-4 pb-24 space-y-4">
 
         {/* QRコード表示 */}
         <div className="bg-white rounded-xl p-4 shadow text-center">

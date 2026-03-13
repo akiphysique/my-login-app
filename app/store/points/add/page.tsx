@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import HomeButton from "@/components/HomeButton";
 
 interface Customer { id: string; name: string; points: number; }
 
@@ -60,7 +61,8 @@ function AddPointsContent() {
         <Link href="/store" className="text-blue-500 text-base">← 戻る</Link>
         <h1 className="font-bold text-gray-800 text-base">ポイント付与</h1>
       </header>
-      <div className="p-4 space-y-4">
+      <HomeButton href="/store" />
+      <div className="p-4 pb-24 space-y-4">
         <div className="bg-white rounded-xl p-4 shadow">
           <label className="block text-gray-600 text-base mb-2">お客様 <span className="text-red-500">*</span></label>
           <select

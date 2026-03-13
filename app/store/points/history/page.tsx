@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import HomeButton from "@/components/HomeButton";
 
 // ポイント履歴1件の型
 interface PointLog {
@@ -40,7 +41,8 @@ export default function PointHistoryPage() {
         <Link href="/store" className="text-blue-500 text-base">← 戻る</Link>
         <h1 className="font-bold text-gray-800 text-base">ポイント履歴</h1>
       </header>
-      <div className="p-4">
+      <HomeButton href="/store" />
+      <div className="p-4 pb-24">
         {loading ? (
           <p className="text-gray-500 text-base">読み込み中...</p>
         ) : logs.length === 0 ? (

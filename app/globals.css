@@ -53,6 +53,35 @@ body {
 }
 
 /* ============================================================
+   ホームボタン（画面下部中央・固定表示）
+   最低56x56px：スマホでも押しやすいサイズ
+   ============================================================ */
+.home-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  min-height: 56px;
+  padding: 8px 20px;
+  border-radius: 28px;
+  text-decoration: none;
+  gap: 3px;
+  /* ライトモード */
+  background-color: #ffffff;
+  color: #333333;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid #e0e0e0;
+}
+
+[data-theme="dark"] .home-btn {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+  border: 1px solid #444444;
+}
+
+/* ============================================================
    ログイン画面サブタイトル（インラインcolor指定の代替クラス）
    app/page.tsx と app/customer/login/page.tsx で使用
    ============================================================ */

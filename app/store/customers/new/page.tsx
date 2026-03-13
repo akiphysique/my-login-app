@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import HomeButton from "@/components/HomeButton";
 
 interface SessionData { storeName?: string; storeAddress?: string; type?: string; }
 
@@ -59,7 +60,8 @@ export default function NewCustomer() {
         <Link href="/store/customers" className="text-blue-500 text-base">← 戻る</Link>
         <h1 className="font-bold text-gray-800 text-base">顧客登録</h1>
       </header>
-      <div className="p-4 space-y-4">
+      <HomeButton href="/store" />
+      <div className="p-4 pb-24 space-y-4">
 
         {/* 登録先店舗の表示（仕様書要件） */}
         <div className="bg-blue-50 rounded-xl px-4 py-3">

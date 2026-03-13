@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import HomeButton from "@/components/HomeButton";
 
 interface SessionData {
   type?: string;
@@ -81,7 +82,8 @@ export default function SettingsPage() {
         <Link href="/store" className="text-blue-500 text-base">← 戻る</Link>
         <h1 className="font-bold text-gray-800 text-base">設定</h1>
       </header>
-      <div className="p-4 space-y-4">
+      <HomeButton href="/store" />
+      <div className="p-4 pb-24 space-y-4">
 
         {/* 店舗情報 */}
         <div className="bg-white rounded-xl p-4 shadow">
