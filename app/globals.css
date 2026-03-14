@@ -222,13 +222,16 @@ body {
    最低44px以上の高さでスマホでも押しやすいサイズ
    ============================================================ */
 .logout-btn {
-  width: 100%;
+  /* 文字幅に合わせたサイズ（横幅いっぱいに広がらない） */
+  width: fit-content;
+  display: block;
+  margin: 0 auto;              /* 中央寄せ */
   background-color: #e53935;   /* 赤 */
   color: #ffffff;              /* 白文字 */
   font-size: 1rem;             /* 16px = 12pt以上 */
   font-weight: bold;
   min-height: 44px;            /* スマホで押しやすい最小高さ */
-  padding: 12px 16px;
+  padding: 12px 32px;          /* 左右に余白を持たせて押しやすくする */
   border: none;
   border-radius: 12px;
   cursor: pointer;
