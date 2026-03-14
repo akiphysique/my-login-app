@@ -55,14 +55,9 @@ export default function StoreDashboard() {
           className="flex items-center justify-between bg-white px-4 py-4 rounded-xl text-gray-800 text-base shadow">
           <span>お客様一覧</span><span>→</span>
         </Link>
-        <Link href="/store/customers/new"
+        <Link href="/store/customers/register"
           className="flex items-center justify-between bg-white px-4 py-4 rounded-xl text-gray-800 text-base shadow">
           <span>お客様登録</span><span>→</span>
-        </Link>
-        {/* QR登録（お客様が自分で登録できる方法） */}
-        <Link href="/store/qr"
-          className="flex items-center justify-between bg-white px-4 py-4 rounded-xl text-gray-800 text-base shadow">
-          <span>QR登録</span><span>→</span>
         </Link>
         <Link href="/store/points/history"
           className="flex items-center justify-between bg-white px-4 py-4 rounded-xl text-gray-800 text-base shadow">

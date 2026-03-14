@@ -17,10 +17,14 @@ const BREADCRUMB_MAP: Record<string, BreadcrumbItem[]> = {
     { label: "ホーム", href: "/store" },
     { label: "お客様一覧" },
   ],
+  "/store/customers/register": [
+    { label: "ホーム", href: "/store" },
+    { label: "お客様登録" },
+  ],
   "/store/customers/new": [
     { label: "ホーム", href: "/store" },
-    { label: "お客様一覧", href: "/store/customers" },
-    { label: "新規登録" },
+    { label: "お客様登録", href: "/store/customers/register" },
+    { label: "店舗様にて登録" },
   ],
   "/store/points/add": [
     { label: "ホーム", href: "/store" },
