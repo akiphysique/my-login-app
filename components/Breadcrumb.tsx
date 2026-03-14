@@ -52,6 +52,15 @@ const BREADCRUMB_MAP: Record<string, BreadcrumbItem[]> = {
     { label: "ホーム", href: "/store" },
     { label: "QRコードでお客様特定" },
   ],
+  // 回数券システム：付与・消化
+  "/store/coupon/grant": [
+    { label: "ホーム", href: "/store" },
+    { label: "回数券付与" },
+  ],
+  "/store/coupon/redeem": [
+    { label: "ホーム", href: "/store" },
+    { label: "回数券消化" },
+  ],
 };
 
 // パンくずリストコンポーネント
