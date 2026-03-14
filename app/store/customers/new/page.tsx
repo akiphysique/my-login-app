@@ -7,9 +7,19 @@ import HomeButton from "@/components/HomeButton";
 
 interface SessionData { storeName?: string; storeAddress?: string; type?: string; }
 
+// 電話番号バリデーション（数字とハイフンのみ）
+const PHONE_REGEX = /^[0-9-]+$/
+
 export default function NewCustomer() {
   const [session, setSession] = useState<SessionData | null>(null);
-  const [form, setForm] = useState({ name: "", email: "", phone: "", memo: "" });
+  const [form, setForm] = useState({
+    name: "",
+    furigana: "",
+    email: "",
+    phone: "",
+    password: "",
+    memo: "",
+  });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -24,18 +34,28 @@ export default function NewCustomer() {
 
   const handleSubmit = async () => {
     // 必須項目チェック
-    if (!form.name || !form.email || !form.phone) {
-      setError("名前・メール・電話番号は必須です");
+    if (!form.name || !form.furigana || !form.email || !form.password) {
+      setError("氏名・フリガナ・メールアドレス・パスワードは必須です");
       return;
     }
+    // メールアドレス形式チェック
+    if (!form.email.includes("@") || !form.email.includes(".")) {
+      setError("メールアドレスの形式が正しくありません");
+      return;
+    }
+    // 電話番号バリデーション（入力された場合のみ）
+    if (form.phone && !PHONE_REGEX.test(form.phone)) {
+      setError("電話番号は数字とハイフンのみ使用できます（例：090-1234-5678）");
+      return;
+    }
+
     setLoading(true);
     setError("");
     try {
       const res = await fetch("/api/customers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // パスワードはデフォルト値を使用（仕様書にパスワード欄の記載なし）
-        body: JSON.stringify({ ...form, password: "matakite123" }),
+        body: JSON.stringify(form),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -72,12 +92,13 @@ export default function NewCustomer() {
         </div>
 
         <div className="bg-white rounded-xl p-4 shadow space-y-3">
-          {/* 名前 */}
+
+          {/* 氏名（必須） */}
           <div>
             <label className="block text-gray-600 text-base mb-1">
-              名前 <span className="text-red-500">*</span>
+              氏名 <span className="text-red-500">*</span>
+              <span className="text-gray-400 text-sm ml-1">（漢字・ローマ字どちらでも可）</span>
             </label>
-            {/* 入力欄と「様」を横並びにする */}
             <div className="flex items-center gap-2">
               <input
                 type="text"
@@ -89,10 +110,26 @@ export default function NewCustomer() {
               <span className="text-gray-800 text-base font-bold whitespace-nowrap">様</span>
             </div>
           </div>
-          {/* メール */}
+
+          {/* フリガナ（必須） */}
           <div>
             <label className="block text-gray-600 text-base mb-1">
-              メール <span className="text-red-500">*</span>
+              フリガナ <span className="text-red-500">*</span>
+              <span className="text-gray-400 text-sm ml-1">（カタカナ・ローマ字どちらでも可）</span>
+            </label>
+            <input
+              type="text"
+              value={form.furigana}
+              onChange={(e) => setForm({ ...form, furigana: e.target.value })}
+              className="w-full border rounded-lg px-4 py-3 text-base text-gray-900"
+              placeholder="ヤマダタロウ"
+            />
+          </div>
+
+          {/* メールアドレス（必須） */}
+          <div>
+            <label className="block text-gray-600 text-base mb-1">
+              メールアドレス <span className="text-red-500">*</span>
             </label>
             <input
               type="email"
@@ -102,10 +139,12 @@ export default function NewCustomer() {
               placeholder="yamada@example.com"
             />
           </div>
-          {/* 電話番号 */}
+
+          {/* 電話番号（任意） */}
           <div>
             <label className="block text-gray-600 text-base mb-1">
-              電話番号 <span className="text-red-500">*</span>
+              電話番号
+              <span className="text-gray-400 text-sm ml-1">（任意）</span>
             </label>
             <input
               type="tel"
@@ -114,7 +153,23 @@ export default function NewCustomer() {
               className="w-full border rounded-lg px-4 py-3 text-base text-gray-900"
               placeholder="090-1234-5678"
             />
+            <p className="text-gray-400 text-sm mt-1">店舗からの連絡に使用します</p>
           </div>
+
+          {/* パスワード（必須） */}
+          <div>
+            <label className="block text-gray-600 text-base mb-1">
+              パスワード <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="password"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              className="w-full border rounded-lg px-4 py-3 text-base text-gray-900"
+              placeholder="8文字以上推奨"
+            />
+          </div>
+
           {/* メモ（任意） */}
           <div>
             <label className="block text-gray-600 text-base mb-1">メモ（任意）</label>
@@ -127,12 +182,6 @@ export default function NewCustomer() {
             />
           </div>
         </div>
-
-        {/* 初期パスワードについての案内 */}
-        <p className="text-gray-400 text-base text-center">
-          お客様の初期パスワードは <strong className="text-gray-600">matakite123</strong> です。<br />
-          ログイン後に変更をお勧めください。
-        </p>
 
         {error && <p className="text-red-500 text-base">{error}</p>}
 

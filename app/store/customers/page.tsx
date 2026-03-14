@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import HomeButton from "@/components/HomeButton";
 
-interface Customer { id: string; name: string; email: string; phone: string; points: number; memo?: string; }
+interface Customer { id: string; name: string; furigana: string; email: string; phone?: string; points: number; memo?: string; }
 
 export default function CustomerList() {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -40,8 +40,10 @@ export default function CustomerList() {
                 <div className="flex justify-between items-start">
                   <div>
                     <p className="font-bold text-gray-800 text-base">{c.name}様</p>
+                    {/* フリガナ：氏名の下に小さく表示 */}
+                    <p className="text-gray-400 text-sm">{c.furigana}</p>
                     <p className="text-gray-500 text-base">{c.email}</p>
-                    <p className="text-gray-500 text-base">{c.phone}</p>
+                    {c.phone && <p className="text-gray-500 text-base">{c.phone}</p>}
                     {c.memo && <p className="text-gray-400 text-base">{c.memo}</p>}
                   </div>
                   <div className="text-right">

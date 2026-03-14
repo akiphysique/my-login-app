@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -25,8 +25,9 @@ model Customer {
   storeId      String
   store        Store      @relation(fields: [storeId], references: [id])
   name         String
+  furigana     String     // フリガナ（カタカナ・ローマ字どちらでも可）
   email        String
-  phone        String
+  phone        String?    // 電話番号（任意）
   points       Int        @default(0)
   memo         String?
   registeredBy String     @default("store")  // "store"＝店舗登録 / "self"＝QR自己登録

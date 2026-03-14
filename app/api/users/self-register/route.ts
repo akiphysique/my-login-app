@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import bcrypt from 'bcryptjs'
 
+// 電話番号のバリデーション（数字とハイフンのみ許可）
+const PHONE_REGEX = /^[0-9-]+$/
+
 // GET: トークンを検証して店舗名・住所を返す（フォーム表示前に呼ぶ）
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
@@ -26,16 +29,21 @@ export async function GET(req: NextRequest) {
 
 // POST: QRコード経由でお客様が自己登録する
 export async function POST(req: NextRequest) {
-  const { token, name, email, phone, password } = await req.json()
+  const { token, name, furigana, email, phone, password } = await req.json()
 
   // 必須項目のバリデーション
-  if (!token || !name || !email || !phone) {
-    return NextResponse.json({ error: 'お名前・メールアドレス・電話番号は必須です' }, { status: 400 })
+  if (!token || !name || !furigana || !email) {
+    return NextResponse.json({ error: 'お名前・フリガナ・メールアドレスは必須です' }, { status: 400 })
   }
 
-  // メールアドレスの形式チェック（簡易）
-  if (!email.includes('@')) {
+  // メールアドレスの形式チェック
+  if (!email.includes('@') || !email.includes('.')) {
     return NextResponse.json({ error: 'メールアドレスの形式が正しくありません' }, { status: 400 })
+  }
+
+  // 電話番号バリデーション（入力された場合のみ）
+  if (phone && !PHONE_REGEX.test(phone)) {
+    return NextResponse.json({ error: '電話番号は数字とハイフンのみ使用できます' }, { status: 400 })
   }
 
   // トークンからstoreIdを取得（クライアントからstore_idは受け取らない）
@@ -55,13 +63,14 @@ export async function POST(req: NextRequest) {
   // パスワードをハッシュ化（指定なければデフォルトを使用）
   const passwordHash = await bcrypt.hash(password || 'matakite123', 10)
 
-  // 顧客を登録（registeredBy = "self" で自己登録を識別）
+  // お客様を登録（registeredBy = "self" で自己登録を識別）
   const customer = await prisma.customer.create({
     data: {
       storeId: store.id,
       name,
+      furigana,
       email,
-      phone,
+      phone: phone || null,       // 任意項目：空の場合はnull
       registeredBy: 'self',
       passwordHash,
     },

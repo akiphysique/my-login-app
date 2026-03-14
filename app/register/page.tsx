@@ -17,7 +17,7 @@ function RegisterForm() {
 
   const [storeInfo, setStoreInfo] = useState<StoreInfo | null>(null);
   const [tokenError, setTokenError] = useState("");
-  const [form, setForm] = useState({ name: "", email: "", phone: "", password: "" });
+  const [form, setForm] = useState({ name: "", furigana: "", email: "", phone: "", password: "" });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -49,8 +49,18 @@ function RegisterForm() {
   // 登録処理
   const handleSubmit = async () => {
     // 必須項目チェック
-    if (!form.name || !form.email || !form.phone) {
-      setError("お名前・メールアドレス・電話番号は必須です");
+    if (!form.name || !form.furigana || !form.email) {
+      setError("お名前・フリガナ・メールアドレスは必須です");
+      return;
+    }
+    // メールアドレス形式チェック
+    if (!form.email.includes("@") || !form.email.includes(".")) {
+      setError("メールアドレスの形式が正しくありません");
+      return;
+    }
+    // 電話番号バリデーション（入力された場合のみ・数字とハイフンのみ）
+    if (form.phone && !/^[0-9-]+$/.test(form.phone)) {
+      setError("電話番号は数字とハイフンのみ使用できます（例：090-1234-5678）");
       return;
     }
     // パスワードが入力されている場合は長さチェック
@@ -133,10 +143,11 @@ function RegisterForm() {
         <h1 className="text-xl font-bold text-gray-800">会員登録</h1>
 
         <div className="bg-white rounded-xl p-4 shadow space-y-3">
-          {/* お名前 */}
+          {/* お名前（必須） */}
           <div>
             <label className="block text-gray-600 text-base mb-1">
               お名前 <span className="text-red-500">*</span>
+              <span className="text-gray-400 text-sm ml-1">（漢字・ローマ字どちらでも可）</span>
             </label>
             <input
               type="text"
@@ -146,7 +157,21 @@ function RegisterForm() {
               placeholder="山田太郎"
             />
           </div>
-          {/* メールアドレス */}
+          {/* フリガナ（必須） */}
+          <div>
+            <label className="block text-gray-600 text-base mb-1">
+              フリガナ <span className="text-red-500">*</span>
+              <span className="text-gray-400 text-sm ml-1">（カタカナ・ローマ字どちらでも可）</span>
+            </label>
+            <input
+              type="text"
+              value={form.furigana}
+              onChange={(e) => setForm({ ...form, furigana: e.target.value })}
+              className="w-full border rounded-lg px-4 py-3 text-base text-gray-900"
+              placeholder="ヤマダタロウ"
+            />
+          </div>
+          {/* メールアドレス（必須） */}
           <div>
             <label className="block text-gray-600 text-base mb-1">
               メールアドレス <span className="text-red-500">*</span>
@@ -159,10 +184,11 @@ function RegisterForm() {
               placeholder="yamada@example.com"
             />
           </div>
-          {/* 電話番号 */}
+          {/* 電話番号（任意） */}
           <div>
             <label className="block text-gray-600 text-base mb-1">
-              電話番号 <span className="text-red-500">*</span>
+              電話番号
+              <span className="text-gray-400 text-sm ml-1">（任意）</span>
             </label>
             <input
               type="tel"
@@ -171,6 +197,7 @@ function RegisterForm() {
               className="w-full border rounded-lg px-4 py-3 text-base text-gray-900"
               placeholder="090-1234-5678"
             />
+            <p className="text-gray-400 text-sm mt-1">店舗からの連絡に使用します</p>
           </div>
           {/* パスワード（省略可） */}
           <div>
