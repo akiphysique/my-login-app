@@ -9,15 +9,20 @@ datasource db {
 }
 
 model Store {
-  id           String     @id @default(cuid())
+  id           String       @id @default(cuid())
   name         String
   address      String
-  email        String     @unique
+  email        String       @unique
   passwordHash String
-  storeToken   String?    @unique  // QR自己登録用トークン（店舗ごとに一意）
-  createdAt    DateTime   @default(now())
+  storeToken   String?      @unique  // QR自己登録用トークン（店舗ごとに一意）
+  createdAt    DateTime     @default(now())
   customers    Customer[]
   pointLogs    PointLog[]
+  // 回数券機能のリレーション
+  couponUsers  CouponUser[]
+  tickets      Ticket[]
+  userTickets  UserTicket[]
+  ticketLogs   TicketLog[]
 }
 
 model Customer {
@@ -46,4 +51,78 @@ model PointLog {
   staffName  String
   memo       String?
   createdAt  DateTime @default(now())
+}
+
+// ============================================================
+// 回数券機能テーブル（coupon_spec.md セクション6）
+// ============================================================
+
+// 6.0 users：顧客・スタッフのアカウント情報を管理
+// スタッフが代理登録した顧客は password_changed = false で登録する
+// 顧客が初回ログイン後にパスワードを変更すると password_changed = true に更新
+model CouponUser {
+  id              String       @id @default(cuid())
+  email           String
+  passwordHash    String       // 暗号化されたパスワード（平文保存禁止）
+  passwordChanged Boolean      @default(false) // パスワード変更済みフラグ（代理登録時はfalse）
+  role            String       @default("customer") // "customer"=顧客 / "staff"=スタッフ
+  storeId         String
+  store           Store        @relation(fields: [storeId], references: [id])
+  createdAt       DateTime     @default(now())
+  // このユーザーが持つ回数券・操作履歴
+  userTickets     UserTicket[]
+  ticketLogs      TicketLog[]
+
+  @@map("users") // DBのテーブル名は "users"
+}
+
+// 6.1 tickets：店舗が設定する回数券の種類を管理
+// 例：「5回券」「10回券」など複数種類を登録できる
+model Ticket {
+  id          String       @id @default(cuid())
+  storeId     String
+  store       Store        @relation(fields: [storeId], references: [id])
+  name        String       // 回数券名（例：5回券）
+  count       Int          // 回数（例：5）
+  stripeLink  String?      // StripeのURL（任意。未登録の場合はnull）
+  createdAt   DateTime     @default(now())
+  // この回数券を持つ顧客・操作履歴
+  userTickets UserTicket[]
+  ticketLogs  TicketLog[]
+
+  @@map("tickets") // DBのテーブル名は "tickets"
+}
+
+// 6.2 user_tickets：顧客が持っている回数券の残数を種類ごとに管理
+// 同じ顧客が複数種類の回数券を持てる。ticket_id で種類を区別する
+model UserTicket {
+  id             String     @id @default(cuid())
+  userId         String
+  user           CouponUser @relation(fields: [userId], references: [id])
+  storeId        String
+  store          Store      @relation(fields: [storeId], references: [id])
+  ticketId       String     // どの種類の回数券か（必須・複数種類を区別するため）
+  ticket         Ticket     @relation(fields: [ticketId], references: [id])
+  remainingCount Int        @default(0) // 残り回数
+  createdAt      DateTime   @default(now())
+
+  @@map("user_tickets") // DBのテーブル名は "user_tickets"
+}
+
+// 6.3 ticket_logs：回数券の付与・消化の操作履歴
+// 「誰が」「何の理由で」「何回」付与/消化したかを必ず記録する（不正防止）
+model TicketLog {
+  id        String     @id @default(cuid())
+  userId    String
+  user      CouponUser @relation(fields: [userId], references: [id])
+  storeId   String
+  store     Store      @relation(fields: [storeId], references: [id])
+  ticketId  String     // 対象の回数券の種類（必須）
+  ticket    Ticket     @relation(fields: [ticketId], references: [id])
+  change    Int        // 変化量（付与は正の数例：+5、消化は負の数例：-1）
+  staffName String     // 操作したスタッフ名（必須・手入力）
+  reason    String     // 理由（例：回数券購入、施術1回分）
+  createdAt DateTime   @default(now())
+
+  @@map("ticket_logs") // DBのテーブル名は "ticket_logs"
 }
