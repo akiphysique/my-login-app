@@ -42,6 +42,11 @@ const BREADCRUMB_MAP: Record<string, BreadcrumbItem[]> = {
     { label: "ホーム", href: "/store" },
     { label: "設定" },
   ],
+  // 回数券システム：スタッフによる顧客代理登録
+  "/store/coupon/users/new": [
+    { label: "ホーム", href: "/store" },
+    { label: "お客様代理登録（回数券）" },
+  ],
 };
 
 // パンくずリストコンポーネント

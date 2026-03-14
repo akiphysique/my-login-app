@@ -10,5 +10,9 @@ export async function GET() {
     name: session.name,
     storeName: session.storeName,
     storeAddress: session.storeAddress,
+    // 回数券システム用フィールド
+    couponUserId: session.couponUserId,
+    couponUserRole: session.couponUserRole,
+    couponPasswordChanged: session.couponPasswordChanged,
   })
 }
