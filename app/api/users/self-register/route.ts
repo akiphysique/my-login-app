@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import bcrypt from 'bcryptjs'
 
-// 電話番号のバリデーション（数字とハイフンのみ許可）
-const PHONE_REGEX = /^[0-9-]+$/
+// 電話番号のバリデーション（数字のみ許可・ハイフンなし）
+const PHONE_REGEX = /^[0-9]+$/
 
 // GET: トークンを検証して店舗名・住所を返す（フォーム表示前に呼ぶ）
 export async function GET(req: NextRequest) {
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
 
   // 電話番号バリデーション（入力された場合のみ）
   if (phone && !PHONE_REGEX.test(phone)) {
-    return NextResponse.json({ error: '電話番号は数字とハイフンのみ使用できます' }, { status: 400 })
+    return NextResponse.json({ error: '電話番号は数字のみ使用できます（ハイフンなし）' }, { status: 400 })
   }
 
   // トークンからstoreIdを取得（クライアントからstore_idは受け取らない）

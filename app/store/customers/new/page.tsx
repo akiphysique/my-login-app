@@ -7,8 +7,8 @@ import HomeButton from "@/components/HomeButton";
 
 interface SessionData { storeName?: string; storeAddress?: string; type?: string; }
 
-// 電話番号バリデーション（数字とハイフンのみ）
-const PHONE_REGEX = /^[0-9-]+$/
+// 電話番号バリデーション（数字のみ許可・ハイフンなし）
+const PHONE_REGEX = /^[0-9]+$/
 
 export default function NewCustomer() {
   const [session, setSession] = useState<SessionData | null>(null);
@@ -45,7 +45,7 @@ export default function NewCustomer() {
     }
     // 電話番号バリデーション（入力された場合のみ）
     if (form.phone && !PHONE_REGEX.test(form.phone)) {
-      setError("電話番号は数字とハイフンのみ使用できます（例：090-1234-5678）");
+      setError("電話番号は数字のみ入力できます（例：09012345678）");
       return;
     }
 
@@ -149,11 +149,16 @@ export default function NewCustomer() {
             <input
               type="tel"
               value={form.phone}
-              onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              onChange={(e) => {
+                // 数字以外の入力を自動除去（ハイフン・文字・記号を入力できないようにする）
+                const digits = e.target.value.replace(/[^0-9]/g, "");
+                setForm({ ...form, phone: digits });
+              }}
               className="w-full border rounded-lg px-4 py-3 text-base text-gray-900"
-              placeholder="090-1234-5678"
+              placeholder="例：09012345678"
+              inputMode="numeric"
             />
-            <p className="text-gray-400 text-sm mt-1">店舗からの連絡に使用します</p>
+            <p className="text-gray-400 text-sm mt-1">ハイフンなしで入力してください。店舗からの連絡に使用します</p>
           </div>
 
           {/* パスワード（必須） */}
