@@ -433,6 +433,104 @@ body {
 }
 
 /* ============================================================
+   顧客QRコードスキャナー（スタッフ用カメラ起動オーバーレイ）
+   ダーク・ライト両対応
+   ============================================================ */
+
+/* 画面全体を覆う半透明の背景 */
+.coupon-qr-scanner-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 16px;
+}
+
+/* スキャナーダイアログ本体 */
+.coupon-qr-scanner-box {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px 16px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+}
+
+[data-theme="dark"] .coupon-qr-scanner-box {
+  background-color: #1e1e1e;
+}
+
+/* スキャナータイトル */
+.coupon-qr-scanner-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 6px;
+}
+
+[data-theme="dark"] .coupon-qr-scanner-title {
+  color: #e0e0e0;
+}
+
+/* スキャナー説明文 */
+.coupon-qr-scanner-desc {
+  font-size: 13px;
+  color: #666666;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+[data-theme="dark"] .coupon-qr-scanner-desc {
+  color: #999999;
+}
+
+/* カメラ映像エリア（html5-qrcode が描画） */
+.coupon-qr-video-area {
+  width: 100%;
+  min-height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #000000;
+  margin-bottom: 12px;
+}
+
+/* カメラ起動中メッセージ */
+.coupon-qr-loading {
+  font-size: 13px;
+  color: #888888;
+  margin-bottom: 12px;
+}
+
+/* エラーメッセージ */
+.coupon-qr-error {
+  font-size: 13px;
+  color: #e53935;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+/* キャンセルボタン */
+.coupon-qr-close-btn {
+  width: 100%;
+  min-height: 44px;
+  background-color: #555555;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  padding: 10px 16px;
+}
+
+.coupon-qr-close-btn:hover {
+  background-color: #444444;
+}
+
+/* ============================================================
    パンくずリスト（現在地表示バー）
    ログイン画面・ホーム画面以外の全ページ上部に表示
    ============================================================ */

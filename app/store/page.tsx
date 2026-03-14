@@ -67,6 +67,11 @@ export default function StoreDashboard() {
           className="flex items-center justify-between bg-white px-4 py-4 rounded-xl text-gray-800 text-base shadow">
           <span>設定</span><span>→</span>
         </Link>
+        {/* 回数券システム：QRコードでお客様を特定する */}
+        <Link href="/store/coupon/scan"
+          className="flex items-center justify-between bg-white px-4 py-4 rounded-xl text-gray-800 text-base shadow">
+          <span>📷 QRコードでお客様特定（回数券）</span><span>→</span>
+        </Link>
       </nav>
 
       <div className="px-4 mt-2 pb-6">
