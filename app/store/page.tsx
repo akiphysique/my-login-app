@@ -46,9 +46,9 @@ export default function StoreDashboard() {
 
       {/* ナビゲーションメニュー */}
       <nav className="p-4 space-y-3">
-        {/* ポイント付与（最重要・一番上・青色で目立たせる） */}
+        {/* ポイント付与 */}
         <Link href="/store/points/add"
-          className="flex items-center justify-between bg-blue-500 text-white px-4 py-4 rounded-xl font-bold text-base shadow">
+          className="flex items-center justify-between bg-white px-4 py-4 rounded-xl text-gray-800 text-base shadow">
           <span>ポイント付与</span><span>→</span>
         </Link>
         <Link href="/store/customers"
