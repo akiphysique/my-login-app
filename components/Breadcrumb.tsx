@@ -61,6 +61,10 @@ const BREADCRUMB_MAP: Record<string, BreadcrumbItem[]> = {
     { label: "ホーム", href: "/store" },
     { label: "回数券消化" },
   ],
+  "/store/coupon/tickets": [
+    { label: "ホーム", href: "/store" },
+    { label: "回数券設定" },
+  ],
 };
 
 // パンくずリストコンポーネント
