@@ -30,7 +30,7 @@ export default function CustomerRegisterMethodPage() {
       <HomeButton href="/store" />
 
       <div className="p-4 pb-24 space-y-4">
-        <p className="text-gray-600 text-base">登録方法を選んでください</p>
+        <p className="font-bold text-gray-800 text-base">登録方法を選択してください</p>
 
         {/* カード1：お客様にて登録（QRコード） */}
         <Link href="/store/qr" className="register-method-card">
